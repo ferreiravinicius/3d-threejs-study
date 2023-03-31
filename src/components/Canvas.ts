@@ -1,4 +1,5 @@
-import { Camera, Renderer, Scene } from "three";
+import { Camera, PerspectiveCamera, Renderer, Scene } from "three";
+import { Resizable, SizeProps } from "../tools/factory";
 
 export interface CanvasProps {
   scene: Scene;
@@ -10,11 +11,11 @@ export interface CanvasProps {
 /**
  * Canvas (context)
  */
-export class Canvas {
+export class Canvas implements Resizable {
   scene: Scene;
   camera: Camera;
   private renderer: Renderer;
-  private container: Element
+  private container: Element;
 
   constructor(props: CanvasProps) {
     const { scene, camera, renderer, container } = props;
@@ -25,12 +26,36 @@ export class Canvas {
     this.setup();
   }
 
-  private setup() {
+  public onResize({ width, height }: SizeProps) {
+    // update camera aspect ratio and projection matrix (?)
+    if (this.camera instanceof PerspectiveCamera) {
+      this.camera.aspect = width / height;
+      this.camera.updateProjectionMatrix;
+      this.camera.lookAt(this.scene.position);
+    }
+
+    // update renderer sizes
+    this.renderer.setSize(width, height);
+    this.render();
+
+    console.log("updated size", width, height);
+  }
+
+  private setup(): void {
+    // insert the <canvas> inside the `div container`
     this.container.append(this.renderer.domElement);
-    this.scene.add(this.camera)
+
+    // add objects to scene
+    this.scene.add(this.camera);
+
+    this.onResize({
+      width: this.container.clientWidth,
+      height: this.container.clientHeight,
+    });
   }
 
   public render() {
+    // renderer
     this.renderer.render(this.scene, this.camera);
   }
 }

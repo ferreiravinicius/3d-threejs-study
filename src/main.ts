@@ -5,17 +5,31 @@ import { createCanvas } from "./tools/factory";
 
 function createCubeMesh() {
   const geometry = new BoxGeometry(2, 2, 2);
-  const material = new MeshBasicMaterial();
+  const material = new MeshBasicMaterial({ color: 0xff00ff });
   return new Mesh(geometry, material);
 }
 
+const container = document.querySelector("div#container")!;
+const canvas = createCanvas(container);
+
 const main = () => {
-  const container = document.querySelector("div#container")!;
-  const canvas = createCanvas(container);  
-  
   const cubeMesh = createCubeMesh();
   canvas.scene.add(cubeMesh);
 
   canvas.render();
 };
+
+if (window) {
+  window.addEventListener(
+    "resize",
+    () => {
+      canvas.onResize({
+        width: container.clientWidth,
+        height: container.clientHeight,
+      });
+    },
+    false
+  );
+}
+
 main();
