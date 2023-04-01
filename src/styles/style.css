@@ -1,47 +1,17 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
-
 body {
-  margin: 0;
+  background-color: #000;
+  margin: 0px;
+  overflow: hidden;
   display: flex;
-  place-items: center;
-  min-width: 100vw;
-  min-height: 100vh;
-
+  height: 100vh;
+  width: 100vw;
   justify-content: center;
-  background-color: lightgrey;
-}
-
-#container {
-  /* tell our scene container to take up the full page */
-  position: absolute;
-  width: 80vw;
-  height: 80vh;
-
-  /*
-    Set the container's background color to the same as the scene's
-    background to prevent flashing on load
-  */
-  /* background-color: rgb(36, 36, 36); */
-  /* background-color: red;  */
-  border: 2px solid red;
-
-  display: flex;
   align-content: center;
   align-items: center;
-  justify-content: center;
-  justify-items: center;
+}
+
+div#container {
+  width: 80vw;
+  height: 80vw; /* using vw instead of vh */
+  background-color: cyan;
 }

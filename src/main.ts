@@ -1,35 +1,40 @@
-import { BoxGeometry, Mesh, MeshBasicMaterial } from "three";
+import {
+  BoxGeometry,
+  Color,
+  Mesh,
+  MeshBasicMaterial,
+  PerspectiveCamera,
+  Scene,
+  WebGLRenderer,
+} from "three";
 import "./styles/style.css";
 
-import { createCanvas } from "./tools/factory";
-
-function createCubeMesh() {
-  const geometry = new BoxGeometry(2, 2, 2);
-  const material = new MeshBasicMaterial({ color: 0xff00ff });
-  return new Mesh(geometry, material);
-}
-
+// dom
 const container = document.querySelector("div#container")!;
-const canvas = createCanvas(container);
+const canvas = document.createElement("canvas");
+container.appendChild(canvas);
 
-const main = () => {
-  const cubeMesh = createCubeMesh();
-  canvas.scene.add(cubeMesh);
+const width = container.clientWidth;
+const height = container.clientHeight;
 
-  canvas.render();
-};
+// scene
+const scene = new Scene();
+scene.background = new Color("navy");
 
-if (window) {
-  window.addEventListener(
-    "resize",
-    () => {
-      canvas.onResize({
-        width: container.clientWidth,
-        height: container.clientHeight,
-      });
-    },
-    false
-  );
-}
+// camera
+const camera = new PerspectiveCamera();
+camera.aspect = width / height;
+camera.position.z = 10;
 
-main();
+const material = new MeshBasicMaterial({ color: 0xff00ff });
+const geometry = new BoxGeometry(2, 2, 2);
+const boxMesh = new Mesh(geometry, material);
+
+// putting into scene
+scene.add(camera);
+scene.add(boxMesh);
+
+// renderer
+const renderer = new WebGLRenderer({ canvas: canvas, antialias: true });
+renderer.setSize(width, height);
+renderer.render(scene, camera);
