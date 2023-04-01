@@ -14,4 +14,5 @@ div#container {
   width: 80vw;
   height: 80vw; /* using vw instead of vh */
   background-color: cyan;
+  overflow: hidden;
 }
